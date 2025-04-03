@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mind The Barbers - Premium Grooming</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- AOS library for scroll animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+    :root {
+    --primary: #2b2b2b;
+    --secondary: #d4af37; /* Gold color */
+    --accent: #c72c2c; /* Red accent */
+    --light: #f5f5f5;
+    --dark: #1a1a1a;
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light);
+    color: var(--primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    }
+
+    .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    }
+
+    /* Animated background particles */
+    .bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.03;
+    background: linear-gradient(to bottom right,
+    var(--secondary) 0%, transparent 70%),
+    linear-gradient(to top left, var(--accent) 0%, transparent 70%);
+    pointer-events: none;
+    }
+
+    /* Animated scissors */
+    .scissors {
+    position: absolute;
+    color: var(--secondary);
+    opacity: 0.1;
+    z-index: 0;
+    animation: floatScissors 20s infinite linear;
+    }
+
+    @keyframes floatScissors {
+    0% {
+    transform: translateY(0) rotate(0deg);
+    }
+    50% {
+    transform: translateY(-50px) rotate(180deg);
+    }
+    100% {
+    transform: translateY(0) rotate(360deg);
+    }
+    }
+
+    /* Header with animation */
+    header {
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 7px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: var(--transition);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header.scrolled {
+    padding: 15px 0;
+    background-color: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    }
+
+    nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+
+    .logo {
+    /* width: 200px;
+    height: 200px; */
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--light);
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    }
+
+    .logo img {
+    width: 100px;
+    height: 100px;
+    color: var(--secondary);
+    margin-right: 10px;
+    transition: var(--transition);
+    }
+
+    .logo:hover img {
+    transform: rotate(360deg);
+    }
+
+    .nav-links {
+    display: flex;
+    list-style: none;
+    }
+
+    .nav-links li {
+    margin-left: 30px;
+    position: relative;
+    }
+
+    .nav-links a {
+    color: var(--light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    padding: 5px 0;
+    position: relative;
+    }
+
+    .nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--secondary);
+    transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+    color: var(--secondary);
+    }
+
+    .nav-links a:hover::after {
+    width: 100%;
+    }
+
+    .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 1000;
+    }
+
+    .hamburger {
+    width: 30px;
+    height: 20px;
+    position: relative;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+    }
+
+    .hamburger span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--secondary);
+    border-radius: 3px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+    }
+
+    .hamburger span:nth-child(1) {
+    top: 0px;
+    }
+
+    .hamburger span:nth-child(2), .hamburger span:nth-child(3) {
+    top: 10px;
+    }
+
+    .hamburger span:nth-child(4) {
+    top: 20px;
+    }
+
+    .hamburger.open span:nth-child(1) {
+    top: 10px;
+    width: 0%;
+    left: 50%;
+    }
+
+    .hamburger.open span:nth-child(2) {
+    transform: rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg);
+    }
+
+    .hamburger.open span:nth-child(4) {
+    top: 10px;
+    width: 0%;
+    left: 50%;
+    }
+
+    .mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background: var(--dark);
+    z-index: 999;
+    padding-top: 80px;
+    transition: right 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    }
+
+    .mobile-menu.open {
+    right: 0;
+    }
+
+    .mobile-menu-links {
+    list-style: none;
+    padding-top: 40px;
+    margin: 0;
+    }
+
+    .mobile-menu-links li {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.3s ease;
+    }
+
+    .mobile-menu.open .mobile-menu-links li {
+    opacity: 1;
+    transform: translateX(0);
+    }
+
+    .mobile-menu.open .mobile-menu-links li:nth-child(1) { transition-delay: 0.1s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(2) { transition-delay: 0.2s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(3) { transition-delay: 0.3s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(4) { transition-delay: 0.4s; }
+    .mobile-menu.open .mobile-menu-links li:nth-child(5) { transition-delay: 0.5s; }
+
+    .mobile-menu-links a {
+    display: block;
+    padding: 15px 30px;
+    color: var(--light);
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+    transition: all 0.3s;
+    }
+
+    .mobile-menu-links a:hover, .mobile-menu-links a:active {
+    background: rgba(184, 134, 11, 0.1);
+    color: var(--secondary);
+    border-left: 3px solid var(--secondary);
+    }
+
+    .mobile-menu-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+    padding: 0 30px;
+    }
+
+    .mobile-menu-social a {
+    color: var(--light);
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    }
+
+    .mobile-menu-social a:hover {
+    background: var(--secondary);
+    color: var(--dark);
+    transform: translateY(-5px);
+    }
+
+    .mobile-menu-footer {
+    text-align: center;
+    padding: 30px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 40px;
+    }
+
+    .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    }
+
+    .overlay.active {
+    opacity: 1;
+    visibility: visible;
+    }
+
+    /* Scissors animation for mobile menu */
+    .scissors-icon {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    font-size: 30px;
+    color: var(--secondary);
+    animation: snip 4s infinite;
+    }
+
+    @keyframes snip {
+    0% { transform: rotate(0deg) scale(1); }
+    10% { transform: rotate(10deg) scale(1.2); }
+    20% { transform: rotate(-5deg) scale(1.2); }
+    30% { transform: rotate(0deg) scale(1); }
+    100% { transform: rotate(0deg) scale(1); }
+    }
+
+    /* Hero section with better animation */
+    .hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    /* url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80'); */
+    url('assets/scissors.webp');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    }
+
+    .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    padding: 0 20px;
+    }
+
+    .hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    animation: fadeIn 1s ease-out;
+    }
+
+    .hero-content h1::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 3px;
+    background-color: var(--secondary);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    }
+
+    .hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+    animation: fadeIn 1s ease-out 0.5s both;
+    }
+
+    .cta-button {
+    display: inline-block;
+    background-color: var(--secondary);
+    color: var(--dark);
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: fadeIn 1s ease-out 1s both;
+    }
+
+    .cta-button:hover {
+    background-color: #fff;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes fadeIn {
+    from {
+    opacity: 0;
+    transform: translateY(30px);
+    }
+    to {
+    opacity: 1;
+    transform: translateY(0);
+    }
+    }
+
+    /* Section styling with animations */
+    section {
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+    }
+
+    section:nth-child(even) {
+    background-color: #f9f9f9;
+    }
+
+    .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    }
+
+    .section-title h2 {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    color: var(--primary);
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+    }
+
+    .section-title h2::before,
+    .section-title h2::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 2px;
+    background-color: var(--secondary);
+    top: 50%;
+    }
+
+    .section-title h2::before {
+    right: 100%;
+    }
+
+    .section-title h2::after {
+    left: 100%;
+    }
+
+    /* Services section */
+    .services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    }
+
+    .service-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    }
+
+    .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .service-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    }
+
+    .service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+    }
+
+    .service-card:hover .service-image img {
+    transform: scale(1.1);
+    }
+
+    .service-content {
+    padding: 25px;
+    }
+
+    .service-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--primary);
+    position: relative;
+    padding-bottom: 15px;
+    }
+
+    .service-content h3::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 2px;
+    background-color: var(--secondary);
+    bottom: 0;
+    left: 0;
+    }
+
+    .service-content p {
+    margin-bottom: 20px;
+    }
+
+    .service-price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 20px;
+    }
+
+    .service-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: var(--transition);
+    }
+
+    .service-button:hover {
+    background-color: var(--secondary);
+    }
+
+    /* Features section */
+    .features-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    }
+
+    .feature-item {
+    text-align: center;
+    padding: 40px 20px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    }
+
+    .feature-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: var(--primary);
+    z-index: -1;
+    transition: var(--transition);
+    }
+
+    .feature-item:hover::before {
+    height: 100%;
+    }
+
+    .feature-item:hover {
+    transform: translateY(-10px);
+    }
+
+    .feature-icon {
+    font-size: 3rem;
+    color: var(--secondary);
+    margin-bottom: 20px;
+    transition: var(--transition);
+    }
+
+    .feature-item:hover .feature-icon {
+    color: var(--secondary);
+    transform: rotateY(360deg);
+    }
+
+    .feature-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    transition: var(--transition);
+    }
+
+    .feature-item p {
+    transition: var(--transition);
+    }
+
+    .feature-item:hover h3,
+    .feature-item:hover p {
+    color: white;
+    }
+
+    /* Gallery section */
+    .gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    }
+
+    .gallery-item {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    }
+
+    .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+    }
+
+    .gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: var(--transition);
+    }
+
+    .gallery-item:hover img {
+    transform: scale(1.1);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+    }
+
+    .gallery-icon {
+    color: white;
+    font-size: 2rem;
+    transform: scale(0);
+    transition: var(--transition);
+    }
+
+    .gallery-item:hover .gallery-icon {
+    transform: scale(1);
+    }
+
+    /* Testimonials section */
+    .testimonials-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    }
+
+    .testimonial-item {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    }
+
+    .testimonial-item::before {
+    content: '\201C';
+    font-family: Georgia, serif;
+    font-size: 5rem;
+    color: var(--secondary);
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    opacity: 0.3;
+    }
+
+    .testimonial-text {
+    font-style: italic;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    }
+
+    .testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .testimonial-author img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    }
+
+    .author-info h4 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    }
+
+    .author-info p {
+    color: var(--secondary);
+    font-weight: 500;
+    }
+
+    /* CTA section */
+    .cta-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url('assets/IMG_2533.JPEG');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
+    padding: 100px 0;
+    }
+
+    .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+    }
+
+    .cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    }
+
+    .cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    }
+
+    .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    }
+
+    .cta-primary {
+    background-color: var(--secondary);
+    color: var(--dark);
+    }
+
+    .cta-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    }
+
+    .cta-primary:hover, .cta-secondary:hover {
+    transform: translateY(-5px);
+    }
+
+    /* Contact section with hover animations */
+    .contact-info {
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    }
+
+    .contact-info::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+    opacity: 0.05;
+    animation: rotate 30s linear infinite;
+    }
+
+    @keyframes rotate {
+    from {
+    transform: rotate(0deg);
+    }
+    to {
+    transform: rotate(360deg);
+    }
+    }
+
+    .contact-info h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--primary);
+    }
+
+    .contact-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+    }
+
+    .contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--transition);
+    padding: 20px;
+    border-radius: 10px;
+    }
+
+    .contact-item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    transform: translateY(-10px);
+    }
+
+    .contact-icon {
+    width: 70px;
+    height: 70px;
+    background-color: var(--secondary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+    }
+
+    .contact-icon::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--secondary);
+    border-radius: 50%;
+    z-index: -1;
+    transform: scale(0.9);
+    opacity: 0.3;
+    animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+    0% {
+    transform: scale(0.9);
+    opacity: 0.3;
+    }
+    70% {
+    transform: scale(1.3);
+    opacity: 0;
+    }
+    100% {
+    transform: scale(0.9);
+    opacity: 0;
+    }
+    }
+
+    .contact-item:hover .contact-icon {
+    transform: rotateY(360deg);
+    }
+
+    .contact-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--primary);
+    }
+
+    /* Footer styling */
+    footer {
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 60px 0 30px;
+    position: relative;
+    overflow: hidden;
+    }
+
+    .footer-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('assets/img3_1.jpg') center/cover;
+    opacity: 0.1;
+    z-index: 0;
+    }
+
+    .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    }
+
+    .footer-logo {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    }
+
+    .footer-logo i {
+    color: var(--secondary);
+    margin-right: 10px;
+    }
+
+    .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    margin: 20px 0;
+    }
+
+    .footer-links li {
+    margin: 0 15px;
+    }
+
+    .footer-links a {
+    color: var(--light);
+    text-decoration: none;
+    transition: var(--transition);
+    font-size: 1.1rem;
+    opacity: 0.8;
+    position: relative;
+    }
+
+    .footer-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--secondary);
+    transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+    color: var(--secondary);
+    opacity: 1;
+    }
+
+    .footer-links a:hover::after {
+    width: 100%;
+    }
+
+    .social-links {
+    display: flex;
+    gap: 20px;
+    margin: 30px 0;
+    }
+
+    .social-links a,
+    .mobile-menu-social a,
+    .footer-links a {
+    text-decoration: none;
+    }
+
+    .social-links a {
+    color: var(--light);
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    transition: var(--transition);
+    }
+
+    .social-links a:hover {
+    background-color: var(--secondary);
+    color: var(--dark);
+    transform: translateY(-5px);
+    }
+
+    .copyright {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 30px;
+    }
+
+    /* Animated barber pole */
+    .barber-pole-container {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 300px;
+    width: 40px;
+    border-radius: 30px;
+    overflow: hidden;
+    opacity: 0.7;
+    display: none; /* Will show on larger screens */
+    }
+
+    .barber-pole {
+    height: 100%;
+    width: 100%;
+    background: repeating-linear-gradient(
+    -45deg,
+    var(--secondary) 0px,
+    var(--secondary) 10px,
+    #fff 10px,
+    #fff 20px,
+    var(--accent) 20px,
+    var(--accent) 30px,
+    #fff 30px,
+    #fff 40px
+    );
+    background-size: 56px 56px;
+    animation: barberPole 2s linear infinite;
+    }
+
+    .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .lightbox.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .lightbox-content {
+        position: relative;
+        width: 90%;
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2.5rem;
+        cursor: pointer;
+        z-index: 2001;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+    }
+
+    .lightbox-close:hover {
+        opacity: 1;
+        transform: rotate(90deg);
+    }
+
+    .lightbox-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lightbox-image-container {
+        width: 80%;
+        height: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .lightbox-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transform: scale(0.9);
+        opacity: 0;
+        transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.5s ease;
+    }
+
+    .lightbox.active .lightbox-image {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.7;
+        transition: all 0.3s;
+    }
+
+    .lightbox-nav:hover {
+        opacity: 1;
+        background: rgba(212, 175, 55, 0.5);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .lightbox-prev {
+        left: 20px;
+    }
+
+    .lightbox-next {
+        right: 20px;
+    }
+
+    .lightbox-counter {
+        position: absolute;
+        bottom: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: 1rem;
+        opacity: 0.7;
+    }
+
+    /* Animation for image transitions */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+    }
+
+    .animate-in {
+        animation: fadeIn 0.5s forwards;
+    }
+
+    .animate-out {
+        animation: fadeOut 0.5s forwards;
+    }
+
+    /* Make gallery items clearly clickable */
+    .gallery-item {
+        cursor: pointer;
+    }
+    
+    .gallery-item:hover .gallery-icon {
+        animation: pulse 1s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes barberPole {
+    0% {
+    background-position: 0 0;
+    }
+    100% {
+    background-position: 0 -56px;
+    }
+    }
+
+    /* Responsive design */
+    @media (min-width: 992px) {
+    .barber-pole-container {
+    display: block;
+    }
+    }
+
+    @media (max-width: 991px) {
+    .features-container {
+    grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-content h1 {
+    font-size: 3rem;
+    }
+
+    section {
+    padding: 60px 0;
+    }
+    }
+
+    @media (max-width: 768px) {
+    .mobile-toggle {
+    display: block;
+    z-index: 1001;
+    }
+
+    .nav-links {
+    display: none;
+    }
+
+    .features-container {
+    grid-template-columns: 1fr;
+    }
+
+    .hero-content h1 {
+    font-size: 2.5rem;
+    }
+
+    .section-title h2 {
+    font-size: 2rem;
+    }
+
+    .footer-links {
+    flex-direction: column;
+    align-items: center;
+    }
+
+    .footer-links li {
+    margin: 10px 0;
+    }
+
+    .cta-buttons {
+    flex-direction: column;
+    gap: 15px;
+    }
+    }
+
+    @media (max-width: 480px) {
+    .hero-content h1 {
+    font-size: 2rem;
+    }
+
+    .hero-content p {
+    font-size: 1rem;
+    }
+
+    .section-title h2 {
+    font-size: 1.8rem;
+    }
+
+    .contact-info {
+    padding: 30px 20px;
+    }
+
+    .gallery-container {
+    grid-template-columns: 1fr;
+    }
+    }
+
+    /* Special styling for the Book button in header */
+    .nav-links li:last-child a {
+    background-color: var(--secondary);
+    color: var(--dark);
+    padding: 8px 20px;
+    border-radius: 50px;
+    position: relative;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    border: 2px solid var(--dark);
+    transform-style: preserve-3d;
+    text-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Remove the default underline effect */
+    .nav-links li:last-child a::after {
+    display: none;
+    }
+
+    /* Enhanced pulse animation */
+    @keyframes enhanced-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.8), 
+                    inset 0 0 0 0.5px rgba(0, 0, 0, 0.1);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(212, 175, 55, 0),
+                    inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0),
+                    inset 0 0 0 0.5px rgba(0, 0, 0, 0.1);
+        transform: scale(1);
+    }
+    }
+
+    /* Apply the enhanced pulse animation */
+    .nav-links li:last-child a {
+    animation: enhanced-pulse 2s infinite;
+    }
+
+    /* Hover effect */
+    .nav-links li:last-child a:hover {
+    background-color: #e5c24d; /* Slightly lighter gold */
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+    animation: none; /* Stop the animation on hover */
+    letter-spacing: 0.5px;
+    }
+
+    /* Active/click effect */
+    .nav-links li:last-child a:active {
+    transform: translateY(2px) scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    </style>
+</head>
+<body>
+    <!-- Background animation -->
+    <div class="bg-animation"></div>
+
+    <!-- Floating scissors animation -->
+    <!-- <i class="fas fa-cut scissors" style="top: 20%; left: 15%; font-size: 24px;"></i>
+    <i class="fas fa-cut scissors" style="top: 50%; left: 80%; font-size: 32px;"></i>
+    <i class="fas fa-cut scissors" style="top: 80%; left: 30%; font-size: 20px;"></i>
+    <i class="fas fa-cut scissors" style="top: 30%; left: 60%; font-size: 28px;"></i> -->
+
+    <!-- <img src="assets/new_logo.png" alt="logo" class="img_logo"> -->
+    <!-- <img src="assets/new_logo.png" alt="logo" style="top: 20%; left: 15%; font-size: 24px;">
+    <img src="assets/new_logo.png" alt="logo" style="top: 50%; left: 80%; font-size: 32px;">
+    <img src="assets/new_logo.png" alt="logo" style="top: 80%; left: 30%; font-size: 20px;">
+    <img src="assets/new_logo.png" alt="logo" style="top: 30%; left: 60%; font-size: 28px;"> -->
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">
+                    <!-- <i class="fas fa-cut"></i> Mind The Barbers -->
+                    <img src="assets/new_logo.png" alt="logo"> Mind The Barbers
+                </a>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about_us_animated.html">About</a></li>
+                    <li><a href="/contact_us_animated.html">Contact</a></li>
+                    <li><a href="/book_animated.html">Book Now</a></li>
+                </ul>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <i class="fas fa-cut scissors-icon"></i>
+        <ul class="mobile-menu-links">
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <!-- <li><a href="#"><i class="fas fa-list-ul"></i> Services</a></li> -->
+            <li><a href="/about_us_animated.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <!-- <li><a href="#"><i class="fas fa-images"></i> Gallery</a></li> -->
+            <li><a href="/contact_us_animated.html"><i class="fas fa-phone-alt"></i> Contact</a></li>
+            <li><a href="/book_animated.html"><i class="fas fa-calendar-check"></i> Book Now</a></li>
+        </ul>
+        <div class="mobile-menu-social">
+            <a href="https://www.facebook.com/people/Mind-The-Barbers/100070150066840/"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/mind_the_barbers?igsh=MW91N25odnU3ZDlwaA=="><i class="fab fa-instagram"></i></a>
+        </div>
+        <div class="mobile-menu-footer">
+            © 2025 Mind The Barbers<br>Premium Grooming
+        </div>
+    </div>
+    
+    <!-- Overlay for mobile menu -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hero section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Premium Grooming Experience</h1>
+            <p>Where traditional craftsmanship meets modern style</p>
+            <a href="/book_animated.html" class="cta-button">Book Appointment</a>
+        </div>
+    </div>
+
+    <!-- Services section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Our Services</h2>
+            </div>
+            <div class="services-container">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-image">
+                        <img src="assets/img2.webp" alt="Classic Haircut">
+                    </div>
+                    <div class="service-content">
+                        <h3>Classic Haircut</h3>
+                        <p>Our haircuts includes consultation, shampoo, precision cut, and styling.</p>
+                        <div class="service-price">12€</div>
+                        <a href="/book_animated.html" class="service-button">Book Now</a>
+                    </div>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-image">
+                        <img src="assets/IMG_2533.JPEG" alt="Beard Trim">
+                    </div>
+                    <div class="service-content">
+                        <h3>Beard Trim & Styling</h3>
+                        <p>Expert beard shaping, trimming, and styling to enhance your facial features.</p>
+                        <div class="service-price">6€</div>
+                        <a href="/book_animated.html" class="service-button">Book Now</a>
+                    </div>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-image">
+                        <img src="assets/IMG_2542.JPEG" alt="Hot Towel Shave">
+                    </div>
+                    <div class="service-content">
+                        <h3>Hot Towel Shave</h3>
+                        <p>Traditional straight razor shave with hot towels, premium oils, and aftercare.</p>
+                        <div class="service-price">12€</div>
+                        <a href="/book_animated.html" class="service-button">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features section -->
+    <section id="features">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Why Choose Us</h2>
+            </div>
+            <div class="features-container">
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3>Expert Barbers</h3>
+                    <p>Our team consists of highly skilled professionals with years of experience in the industry.</p>
+                </div>
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <h3>Premium Products</h3>
+                    <p>We use only the finest grooming products to ensure the best results for our clients.</p>
+                </div>
+                <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-glass-cheers"></i>
+                    </div>
+                    <h3>Relaxing Atmosphere</h3>
+                    <p>Enjoy complimentary beverages and a comfortable environment during your visit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery section -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Our Gallery</h2>
+            </div>
+            <div class="gallery-container">
+                <div class="gallery-item" data-aos="fade-up" data-aos-delay="100">
+                    <img src="assets/IMG_2534.JPEG" alt="Haircut Style 1">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="gallery-item" data-aos="fade-up" data-aos-delay="150">
+                    <img src="https://images.unsplash.com/photo-1593702288056-f5834cfbef26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Haircut Style 2">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="gallery-item" data-aos="fade-up" data-aos-delay="200">
+                    <img src="assets/IMG_2536.JPEG" alt="Haircut Style 3">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="fade-up" data-aos-delay="250">
+                    <img src="assets/IMG_2539.JPEG" alt="Barber Shop Interior">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="fade-up" data-aos-delay="300">
+                    <img src="assets/shave2.JPEG" alt="Beard Trim">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="fade-up" data-aos-delay="350">
+                    <img src="assets/shave3.JPEG" alt="Barber Shop Interior 2">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="fade-up" data-aos-delay="350">
+                    <img src="assets/shave5.JPEG" alt="Barber Shop Interior 2">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="fade-up" data-aos-delay="350">
+                    <img src="assets/IMG_2538.JPEG" alt="Barber Shop Interior 2">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="fade-up" data-aos-delay="350">
+                    <img src="assets/IMG_2542.JPEG" alt="Barber Shop Interior 2">
+                    <div class="gallery-overlay">
+                        <div class="gallery-icon">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Add lightbox component at the end of the body before scripts -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose">&times;</button>
+            <div class="lightbox-container">
+                <button class="lightbox-nav lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+                <div class="lightbox-image-container">
+                    <img src="" alt="" class="lightbox-image" id="lightboxImage">
+                </div>
+                <button class="lightbox-nav lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="lightbox-counter" id="lightboxCounter">1 / 6</div>
+        </div>
+    </div>
+
+    <!-- Testimonials section -->
+    <!-- <section id="testimonials">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Client Testimonials</h2>
+            </div>
+            <div class="testimonials-container" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-item">
+                    <p class="testimonial-text">
+                        "Mind The Barbers has been my go-to place for the past 3 years. James and his team always deliver exceptional service and I leave feeling confident every time. The attention to detail is unmatched!"
+                    </p>
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="John Davis">
+                        <div class="author-info">
+                            <h4>John Davis</h4>
+                            <p>Regular Client</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- CTA section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="fade-up">
+                <h2>Ready for a Fresh Look?</h2>
+                <p>Book your appointment today and experience premium grooming services tailored to your style.</p>
+                <div class="cta-buttons">
+                    <a href="/book_animated.html" class="cta-button cta-primary">Book Appointment</a>
+                    <!-- <a href="#" class="cta-button cta-secondary">View Services</a> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Find Us</h2>
+            </div>
+            <div class="contact-info" data-aos="fade-up" data-aos-delay="100">
+                <h3>We'd Love to See You</h3>
+                <p>Drop by for a cut or schedule an appointment today.</p>
+
+                <div class="contact-details">
+                    <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Location</h3>
+                        <p><a href="https://www.bing.com/maps?pglt=161&q=mind+the+barbers+athens&cvid=a1cbea67e4284f70bed5d53b8a612fe4&gs_lcrp=EgRlZGdlKgYIABBFGDkyBggAEEUYOTIGCAEQABhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEAyCAgJEOkHGPxV0gEINDQ0MmowajGoAgCwAgA&FORM=ANNAB1&PC=U531">Mesologiou 5, Vironas, Athens, 16231</a></p>
+                        <!-- <p>Mesologiou 5, Vironas, Athens, 16231</p> -->
+                    </div>
+
+                    <div class="contact-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Opening Hours</h3>
+                        <p>Tuesday-Friday: 10:00 - 20:00</p>
+                        <p>Saturday: 09:00 - 17:00</p>
+                        <p><strong>Sunday, Monday: Closed</strong></p>
+                    </div>
+
+                    <div class="contact-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Contact</h3>
+                        <p>Phone: (+30) 210 7646887</p>
+                        <p>Email: info@mindthebarbers.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bg"></div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/new_logo.png" alt="logo" id="img_logo_footer" style="height: 100px; width: 100px; margin-right: 10px;"> Mind The Barbers
+                </div>
+                <p>Premium grooming for the modern gentleman.</p>
+                <ul class="footer-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about_us_animated.html">About</a></li>
+                    <li><a href="contact_us_animated.html">Contact</a></li>
+                    <li><a href="/book_animated.html">Book Now</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/people/Mind-The-Barbers/100070150066840/"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/mind_the_barbers?igsh=MW91N25odnU3ZDlwaA=="><i class="fab fa-instagram"></i></a>
+                    <!-- <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a> -->
+                </div>
+                <p class="copyright">© 2025 Mind The Barbers. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Initialize AOS animations
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add lightbox gallery functionality
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxNext = document.getElementById('lightboxNext');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxCounter = document.getElementById('lightboxCounter');
+
+        let currentImageIndex = 0;
+        const galleryImages = Array.from(galleryItems).map(item => {
+            return item.querySelector('img').src;
+        });
+
+        // Open lightbox
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', function() {
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                currentImageIndex = index;
+                updateLightboxImage();
+            });
+        });
+
+        // Close lightbox
+        lightboxClose.addEventListener('click', function() {
+            closeLightbox();
+        });
+
+        // Close on background click
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Close on escape key, navigate with arrow keys
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+            if (e.key === 'ArrowRight' && lightbox.classList.contains('active')) {
+                nextImage();
+            }
+            if (e.key === 'ArrowLeft' && lightbox.classList.contains('active')) {
+                prevImage();
+            }
+        });
+
+        // Next image
+        lightboxNext.addEventListener('click', function(e) {
+            e.stopPropagation();
+            nextImage();
+        });
+
+        // Previous image
+        lightboxPrev.addEventListener('click', function(e) {
+            e.stopPropagation();
+            prevImage();
+        });
+
+        function updateLightboxImage() {
+            // Fade out current image
+            lightboxImage.classList.add('animate-out');
+            
+            setTimeout(() => {
+                // Update image source
+                lightboxImage.src = galleryImages[currentImageIndex];
+                lightboxCounter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+                
+                // Remove the out animation and add the in animation
+                lightboxImage.classList.remove('animate-out');
+                lightboxImage.classList.add('animate-in');
+                
+                // Remove the in animation after it completes
+                setTimeout(() => {
+                    lightboxImage.classList.remove('animate-in');
+                }, 500);
+            }, 300);
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            updateLightboxImage();
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateLightboxImage();
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false
+        });
+
+        // Mobile menu functionality
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburger = document.querySelector('.hamburger');
+        const overlay = document.getElementById('overlay');
+
+        mobileToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+        });
+
+        overlay.addEventListener('click', function() {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+                hamburger.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Random floating scissors
+        for (let i = 0; i < 3; i++) {
+            const scissors = document.createElement('i');
+            scissors.className = 'fas fa-cut scissors';
+            scissors.style.top = Math.random() * 100 + '%';
+            scissors.style.left = Math.random() * 100 + '%';
+            scissors.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            scissors.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            scissors.style.animationDelay = (Math.random() * 5) + 's';
+            document.body.appendChild(scissors);
+        }
+    });
+    </script>
+</body>
+</html>
